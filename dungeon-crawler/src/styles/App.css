@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #120458;
+  color: #00fff5;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.game-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.game-board-container {
+  border: 2px solid #ff00a0;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #1a0163;
+  position: relative;
+}
+
+.game-board-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(to bottom, rgba(26,1,99,0.8) 0%, rgba(26,1,99,0) 100%),
+    linear-gradient(to right, #ff00a0 1px, transparent 1px),
+    linear-gradient(to bottom, #ff00a0 1px, transparent 1px);
+  background-size: 100% 100%, 20px 20px, 20px 20px;
+  transform: perspective(500px) rotateX(60deg);
+  transform-origin: center bottom;
+  pointer-events: none;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  height: 100%;
+  width: 100%;
+}
+
+.cell {
+  border: 1px solid #3d0e61;
+}
+
+.cell.wall {
+  background-color: #ff00a0;
+}
+
+.cell.floor {
+  background-color: #1a0163;
+}
+
+.cell.neon-line {
+  background-color: #00fff5;
+  box-shadow: 0 0 10px #00fff5, 0 0 20px #00fff5;
+}
+
+.player, .enemy {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.player {
+  filter: drop-shadow(0 0 5px #00fff5);
+}
+
+.enemy {
+  filter: drop-shadow(0 0 5px #ff00a0);
+}
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.character-panel, .inventory-panel, .action-panel, .combat-panel, .mini-map {
+  background-color: #3d0e61;
+  padding: 15px;
+  border-radius: 5px;
+  border: 2px solid #ff00a0;
+  animation: neon-glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes neon-glow {
+  0% {
+    box-shadow: 0 0 5px #ff00a0, 0 0 10px #ff00a0, 0 0 15px #ff00a0, 0 0 20px #ff00a0;
+  }
+  100% {
+    box-shadow: 0 0 10px #ff00a0, 0 0 20px #ff00a0, 0 0 30px #ff00a0, 0 0 40px #ff00a0;
+  }
+}
+
+.action-panel button, .save-button, .item-button {
+  background-color: #ff00a0;
+  color: #00fff5;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-panel button::after, .save-button::after, .item-button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.2), rgba(255,255,255,0));
+  transform: rotate(45deg);
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.action-panel button:hover::after, .save-button:hover::after, .item-button:hover::after {
+  opacity: 1;
+}
+
+.action-panel button:hover, .save-button:hover, .item-button:hover {
+  background-color: #00fff5;
+  color: #ff00a0;
+}
+
+.mini-map {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  gap: 1px;
+  height: 150px;
+}
+
+.mini-cell {
+  background-color: #1a0163;
+}
+
+.mini-cell.wall {
+  background-color: #ff00a0;
+}
+
+.mini-cell.player {
+  background-color: #00fff5;
+}
+
+h1, h2, h3 {
+  color: #ff00a0;
+  text-shadow: 2px 2px #00fff5;
+}
+
+.setup-screen, .game-over-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 20px;
+}
+
+.setup-screen input, .setup-screen select {
+  background-color: #3d0e61;
+  border: 2px solid #ff00a0;
+  color: #00fff5;
+  padding: 10px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.combat-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(18, 4, 88, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.level-up-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #3d0e61;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #ff00a0;
+  text-align: center;
+  z-index: 1000;
+}
